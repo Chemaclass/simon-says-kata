@@ -45,3 +45,12 @@ func TestPlayReturnsBlue(t *testing.T) {
 		t.Error("error")
 	}
 }
+
+func TestPlayReturnsGreen(t *testing.T) {
+	game := NewGame(5)
+	colors := game.Play()
+
+	if !reflect.DeepEqual(colors, []string{"green"}) {
+		t.Errorf("errors %s", colors[0])
+	}
+}

@@ -17,12 +17,14 @@ func NewGame(seed int) Game {
 
 func (g *Game) Play() []string {
 	n := g.rand.Int() % 4
-	if n == 2 {
+	if n == 3 {
+		return []string{"red"}
+	} else if n == 2 {
 		return []string{"blue"}
 	} else if n == 1 {
 		return []string{"yellow"}
 	} else {
-		return []string{"red"}
+		return []string{"green"}
 	}
 
 }
