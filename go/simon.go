@@ -34,7 +34,10 @@ func (g *Game) Play() []string {
 }
 
 func (g *Game) UserInput(input string) bool {
-	return true
+	if input[0] == g.list[0][0] {
+		return true
+	}
+	return false
 }
 
 func main() {

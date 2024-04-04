@@ -64,3 +64,23 @@ func TestPlayReturnsTwoColors(t *testing.T) {
 		t.Errorf("errors %s", colors[0])
 	}
 }
+
+func TestValidUserInput(t *testing.T) {
+	game := NewGame(5)
+	game.Play()
+	ok := game.UserInput("g")
+
+	if !ok {
+		t.Error("error")
+	}
+}
+
+func TestInvalidUserInput(t *testing.T) {
+	game := NewGame(5)
+	game.Play()
+	ok := game.UserInput("r")
+
+	if ok {
+		t.Error("error")
+	}
+}
