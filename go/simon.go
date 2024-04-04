@@ -18,15 +18,15 @@ func NewGame(seed int) Game {
 func (g *Game) Play() []string {
 	n := g.rand.Int() % 4
 	if n == 3 {
-		return []string{"red"}
+		g.list = append(g.list, "red")
 	} else if n == 2 {
-		return []string{"blue"}
+		g.list = append(g.list, "blue")
 	} else if n == 1 {
-		return []string{"yellow"}
+		g.list = append(g.list, "yellow")
 	} else {
-		return []string{"green"}
+		g.list = append(g.list, "green")
 	}
-
+	return g.list
 }
 
 func (g *Game) UserInput(input string) bool {
