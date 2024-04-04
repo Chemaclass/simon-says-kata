@@ -19,7 +19,7 @@ func TestWIPGame(t *testing.T) {
 }
 */
 
-func TestColorsAfterPlay(t *testing.T) {
+func TestPlayReturnsYellow(t *testing.T) {
 	game := NewGame(3)
 	colors := game.Play()
 
@@ -28,11 +28,20 @@ func TestColorsAfterPlay(t *testing.T) {
 	}
 }
 
-func TestPlayReturnsOtherColors(t *testing.T) {
+func TestPlayReturnsRed(t *testing.T) {
 	game := NewGame(2)
 	colors := game.Play()
 
 	if !reflect.DeepEqual(colors, []string{"red"}) {
+		t.Error("error")
+	}
+}
+
+func TestPlayReturnsBlue(t *testing.T) {
+	game := NewGame(1)
+	colors := game.Play()
+
+	if !reflect.DeepEqual(colors, []string{"blue"}) {
 		t.Error("error")
 	}
 }
