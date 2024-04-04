@@ -4,8 +4,8 @@ type Game struct {
 	list []string
 }
 
-func (g *Game) Play() {
-
+func (g *Game) Play() []string {
+	return []string{"yellow"}
 }
 
 func (g *Game) UserInput(input string) bool {
