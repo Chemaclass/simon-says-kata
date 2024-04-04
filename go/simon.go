@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"math/rand"
+	"os"
 	"strings"
 )
 
@@ -37,7 +39,17 @@ func (g *Game) UserInput(input string) bool {
 
 func main() {
 	game := NewGame(1)
+	reader := bufio.NewReader(os.Stdin)
+
 	for i := 0; i < 10; i++ {
 		fmt.Printf("Simon says: %s\n", strings.Join(game.Play(), " "))
+		fmt.Print("Your turn: ")
+		text, _ := reader.ReadString('\n')
+
+		if !game.UserInput(text) {
+			fmt.Println("Game Over!")
+			break
+		}
+		fmt.Println("Good job!")
 	}
 }
