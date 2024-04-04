@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
+	"strings"
 )
 
 type Game struct {
@@ -31,4 +33,11 @@ func (g *Game) Play() []string {
 
 func (g *Game) UserInput(input string) bool {
 	return true
+}
+
+func main() {
+	game := NewGame(1)
+	for i := 0; i < 10; i++ {
+		fmt.Printf("Simon says: %s\n", strings.Join(game.Play(), " "))
+	}
 }
