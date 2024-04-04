@@ -6,30 +6,42 @@ import (
 	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
-type Game struct {
-	list []string
-	rand *rand.Rand
+var possibleColors = [...]string{
+	"red",
+	"green",
+	"blue",
+	"yellow",
 }
 
-func NewGame(seed int) Game {
-	game := Game{}
-	game.rand = rand.New(rand.NewSource(int64(seed)))
-	return game
+type RandomGenerator interface {
+	Generate() string
+}
+
+type RealRandomGenerator struct{}
+
+func (rg *RealRandomGenerator) Generate() string {
+	rand.New(rand.NewSource(time.Now().UnixNano()))
+
+	return possibleColors[rand.Int()%4]
+}
+
+type Game struct {
+	list            []string
+	randomGenerator RandomGenerator
+}
+
+func NewGame(randomGenerator RandomGenerator) *Game {
+	return &Game{
+		randomGenerator: randomGenerator,
+	}
 }
 
 func (g *Game) Play() []string {
-	n := g.rand.Int() % 4
-	if n == 3 {
-		g.list = append(g.list, "red")
-	} else if n == 2 {
-		g.list = append(g.list, "blue")
-	} else if n == 1 {
-		g.list = append(g.list, "yellow")
-	} else {
-		g.list = append(g.list, "green")
-	}
+	w := g.randomGenerator.Generate()
+	g.list = append(g.list, w)
 	return g.list
 }
 
@@ -41,7 +53,7 @@ func (g *Game) UserInput(input string) bool {
 }
 
 func main() {
-	game := NewGame(1)
+	game := NewGame(&RealRandomGenerator{})
 	reader := bufio.NewReader(os.Stdin)
 
 	for i := 0; i < 10; i++ {

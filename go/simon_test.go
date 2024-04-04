@@ -7,20 +7,29 @@ import (
 	. "github.com/JesusValera/simon-says-kata"
 )
 
-/*
-func TestWIPGame(t *testing.T) {
-	game := Game{}
-	game.Play()
-	ok := game.UserInput("y")
+type MockRandomGenerator struct {
+	values []string
+	index  int
+}
 
-	if !ok {
-		t.Error("error")
+func NewMockRandomGenerator(values []string) *MockRandomGenerator {
+	return &MockRandomGenerator{
+		values: values,
+		index:  0,
 	}
 }
-*/
+
+func (rg *MockRandomGenerator) Generate() string {
+	value := rg.values[rg.index]
+	rg.index++
+	if rg.index >= len(rg.values) {
+		rg.index = 0
+	}
+	return value
+}
 
 func TestPlayReturnsYellow(t *testing.T) {
-	game := NewGame(3)
+	game := NewGame(NewMockRandomGenerator([]string{"yellow"}))
 	colors := game.Play()
 
 	if !reflect.DeepEqual(colors, []string{"yellow"}) {
@@ -29,7 +38,7 @@ func TestPlayReturnsYellow(t *testing.T) {
 }
 
 func TestPlayReturnsRed(t *testing.T) {
-	game := NewGame(2)
+	game := NewGame(NewMockRandomGenerator([]string{"red"}))
 	colors := game.Play()
 
 	if !reflect.DeepEqual(colors, []string{"red"}) {
@@ -38,7 +47,7 @@ func TestPlayReturnsRed(t *testing.T) {
 }
 
 func TestPlayReturnsBlue(t *testing.T) {
-	game := NewGame(1)
+	game := NewGame(NewMockRandomGenerator([]string{"blue"}))
 	colors := game.Play()
 
 	if !reflect.DeepEqual(colors, []string{"blue"}) {
@@ -47,7 +56,7 @@ func TestPlayReturnsBlue(t *testing.T) {
 }
 
 func TestPlayReturnsGreen(t *testing.T) {
-	game := NewGame(5)
+	game := NewGame(NewMockRandomGenerator([]string{"green"}))
 	colors := game.Play()
 
 	if !reflect.DeepEqual(colors, []string{"green"}) {
@@ -56,17 +65,17 @@ func TestPlayReturnsGreen(t *testing.T) {
 }
 
 func TestPlayReturnsTwoColors(t *testing.T) {
-	game := NewGame(5)
+	game := NewGame(NewMockRandomGenerator([]string{"green", "red"}))
 	game.Play()
 	colors := game.Play()
 
 	if !reflect.DeepEqual(colors, []string{"green", "red"}) {
-		t.Errorf("errors %s", colors[0])
+		t.Errorf("errors %s", colors)
 	}
 }
 
 func TestValidUserInput(t *testing.T) {
-	game := NewGame(5)
+	game := NewGame(NewMockRandomGenerator([]string{"green"}))
 	game.Play()
 	ok := game.UserInput("g")
 
@@ -76,7 +85,7 @@ func TestValidUserInput(t *testing.T) {
 }
 
 func TestInvalidUserInput(t *testing.T) {
-	game := NewGame(5)
+	game := NewGame(NewMockRandomGenerator([]string{"yellow"}))
 	game.Play()
 	ok := game.UserInput("r")
 
