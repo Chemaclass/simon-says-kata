@@ -20,10 +20,19 @@ func TestWIPGame(t *testing.T) {
 */
 
 func TestColorsAfterPlay(t *testing.T) {
-	game := Game{}
+	game := NewGame(3)
 	colors := game.Play()
 
 	if !reflect.DeepEqual(colors, []string{"yellow"}) {
+		t.Error("error")
+	}
+}
+
+func TestPlayReturnsOtherColors(t *testing.T) {
+	game := NewGame(2)
+	colors := game.Play()
+
+	if !reflect.DeepEqual(colors, []string{"red"}) {
 		t.Error("error")
 	}
 }
