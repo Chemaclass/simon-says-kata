@@ -1,14 +1,13 @@
 package main
 
-import (
-	"fmt"
-)
-
-func main() {
-	k := Kata()
-	fmt.Println(k)
+type Game struct {
+	list []string
 }
 
-func Kata() string {
-	return "hello, world!"
+func (g *Game) Play() {
+
+}
+
+func (g *Game) UserInput(input string) bool {
+	return true
 }

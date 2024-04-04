@@ -6,10 +6,12 @@ import (
 	. "github.com/JesusValera/simon-says-kata"
 )
 
-func TestFoo(t *testing.T) {
-	actual := Kata()
+func TestWIPGame(t *testing.T) {
+	game := Game{}
+	game.Play()
+	ok := game.UserInput("y")
 
-	if len(actual) == 0 {
+	if !ok {
 		t.Error("error")
 	}
 }
